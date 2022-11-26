@@ -6,6 +6,6 @@ interface ButtonProps {
 
 export default function Button(props: ButtonProps){
   return(
-    <button>{props.label}</button>
+    <button className="bg-red-500">{props.label}</button>
   )
 }
