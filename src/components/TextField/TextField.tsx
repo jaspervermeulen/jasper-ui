@@ -8,6 +8,9 @@ interface TextFieldProps {
   ariaLabel?: string
   label?: string
   required?: boolean
+  value?: string
+  startIcon?: ReactNode
+  endIcon?: ReactNode
 }
 
 export function classNames(...classes: (string | undefined)[]) {
@@ -25,21 +28,36 @@ export default function TextField({disabled = false, hasError= false, required =
   }
 
   return(
-    <label>
+    <label className="relative flex flex-col">
       {label}
+      {props.startIcon && (
+        <div className="absolute bottom-3 left-2.5">
+          {props.startIcon}
+        </div>
+      )}
+      {props.endIcon && (
+        <div className="absolute bottom-3 right-2.5">
+          {props.endIcon}
+        </div>
+      )}
       <input 
         required={required}
         aria-label={props.ariaLabel} 
         disabled={disabled} name={props.name} 
         placeholder={props.placeholder} 
         type="text" 
+        value={props.value}
         className={
           classNames(
-            hasError ? 'border-red-500 focus:!ring-1 focus:!ring-red-500 hover:border-red-700' : 'focus:!ring-1 focus:!ring-blue-500 focus:!border-blue-500 hover:border-neutral-300',
-            'focus:!outline-none !outline-none !ring-0 focus:!ring-0 h-10 disabled:opacity-40 disabled:cursor-not-allowed text-base md:text-sm p-2 transition w-full rounded border border-neutral-200 shadow focus:outline-blue-500 focus:outline-offset-2'
+            props.startIcon ? "pl-8" : "pl-2",
+            props.endIcon ? "pr-8" : "pr-2",
+            hasError ? 'border-red-500 focus:!ring-2 focus:!ring-red-500 hover:border-red-700' : 'focus:!ring-2 focus:!ring-blue-500 focus:!border-blue-500 hover:border-neutral-300',
+            'focus:!outline-none disabled:text-neutral-300 !outline-none !ring-0 focus:!ring-0 h-10 bg-white disabled:border-neutral-100 disabled:bg-neutral-50 disabled:cursor-not-allowed text-base md:text-sm p-2 transition w-full rounded border border-neutral-200 shadow focus:outline-blue-500 focus:outline-offset-2'
           )
         }
-      />
+      >
+        
+      </input>
     </label>  
   )
 }
